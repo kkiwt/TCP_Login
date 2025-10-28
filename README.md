@@ -15,6 +15,7 @@ Bước 2: Ấn cú pháp window + r và nhập mmc để vào Window Management
 <img width="721" height="500" alt="image" src="https://github.com/user-attachments/assets/c7c24cb2-3d6d-4f16-9220-007fde6af183" />
 
 Bước 3: Sau đó, ta mở file sln của file Socket_Cinema_Server, chạy file đó. Ấn nút Mở Server để Server có thể lắng nghe.
+
 Bước 4: Cuối cùng, ta mở file sln của file Socket_Cinema, chạy file đó để thực hiện chức năng đăng ký/ đăng nhập
 
 Giao diện của Server:
