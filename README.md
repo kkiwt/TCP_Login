@@ -8,6 +8,7 @@
 + Nguyễn Thái Hùng - 24520613	
 
 Hướng dẫn cài đặt và sử dụng:
+
 Bước 1: Clone repo về máy
 
 Bước 2: Ấn cú pháp window + r và nhập mmc để vào Window Management Console. Sau đó, ta di chuột vào phần file chọn SQLServerManager16, sau đó ta click chuột vào phần SQL Server Network Configuration để hiện các Instances/Server names (của SQL Server). Chọn vào Protocols for (Tên Instances/Server Names mà ta dùng). Chuột phải vào mục TCP/IP, ta chỉnh nó thành Enabled.
