@@ -23,14 +23,8 @@ namespace Socket_Cinema
             InitializeComponent();
         }
 
-        // =============================================== //
-        // 🔹 HÀM GIAO TIẾP VỚI SERVER (ASYNC)             //
-        // =============================================== //
-        /// <summary>
-        /// Kết nối, gửi tin nhắn và nhận phản hồi từ Server qua Socket.
-        /// </summary>
-        /// <param name="message">Lệnh cần gửi (ví dụ: LOGIN|user|hash)</param>
-        /// <returns>Phản hồi từ Server (ví dụ: LOGIN_OK|data|token)</returns>
+
+
         private async Task<string> GuiNhanServerAsync(string message)
         {
             try
@@ -55,7 +49,6 @@ namespace Socket_Cinema
 
 
 
-        // 🔹 Hàm Hash SHA256 (Giữ nguyên)
         public static string ToSha256(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -66,21 +59,19 @@ namespace Socket_Cinema
             }
         }
 
-        // Hàm này không còn được sử dụng vì đã chuyển sang giao tiếp Socket
+
 
 
         private void label1_Click(object sender, EventArgs e)
         {
-            // ...
+
         }
 
 
-        // =============================================== //
-        // 🔹 HÀM XỬ LÝ NÚT ĐĂNG NHẬP (ASYNC)              //
-        // =============================================== //
+
         private async void button1_Click(object sender, EventArgs e)
         {
-            // Giả định TenDangNhap và MatKhau là các control TextBox
+
             string username = TenDangNhap.Text.Trim();
             string matKhauNhap = MatKhau.Text;
 
@@ -90,39 +81,37 @@ namespace Socket_Cinema
                 return;
             }
 
-            // 💡 1. Hash mật khẩu (Client hash trước khi gửi)
+
             string passwordHash = ToSha256(matKhauNhap);
 
-            // 💡 2. Tạo lệnh LOGIN theo giao thức: LOGIN|Username|PasswordHash
+
             string command = $"LOGIN|{username}|{passwordHash}";
 
-            // 💡 3. Gửi lệnh qua Socket và chờ phản hồi (Async)
+
             string response = await GuiNhanServerAsync(command);
 
             if (response.StartsWith("LOGIN_OK"))
             {
-                // 💡 4. Phản hồi thành công: LOGIN_OK|HoTen|NgaySinh|SDT|Email|KhuVuc|Username|TOKEN
+                // Phản hồi thành công: LOGIN_OK|HoTen|NgaySinh|SDT|Email|KhuVuc|Username|TOKEN
                 string[] parts = response.Split('|');
 
                 // Kiểm tra đủ 8 phần tử: Command (0) + 6 thuộc tính User + Token (7)
                 if (parts.Length == 8)
                 {
-                    // 💡 5. Trích xuất thông tin User và TOKEN
+                    // Trích xuất thông tin User và TOKEN
                     UserInfo currentUser = new UserInfo
                     {
                         HoTen = parts[1],
-                        // Chuyển NgaySinh từ chuỗi sang DateTime (hoặc DateTime.MinValue nếu lỗi)
                         NgaySinh = DateTime.TryParse(parts[2], out DateTime dob) ? dob : DateTime.MinValue,
                         SDT = parts[3],
                         Email = parts[4],
                         KhuVuc = parts[5],
                         Username = parts[6],
-                        AuthToken = parts[7] // ⭐️ Lấy TOKEN từ phần tử cuối cùng
+                        AuthToken = parts[7] // Lấy TOKEN
                     };
 
                     MessageBox.Show($"Đăng nhập thành công! Token đã nhận.", "Thành công");
 
-                    // 💡 6. Chuyển sang giao diện chính
                     GiaoDienSauKhiDaDangNhapHoacDangKyXong GiaoDien = new GiaoDienSauKhiDaDangNhapHoacDangKyXong(currentUser);
                     this.Hide();
                     GiaoDien.Show();

@@ -31,9 +31,6 @@ namespace Socket_Cinema
             return response?.Trim() ?? "";
         }
 
-        // ================================= //
-        // 🔹 Nút "Đăng ký"
-        // ================================= //
         private async void NutDangKy_Click(object sender, EventArgs e)
         {
             string hoTen = HoTen.Text.Trim();
@@ -45,7 +42,7 @@ namespace Socket_Cinema
             DateTime ngaySinh = NgayThangNamSinh.Value.Date;
             string khuVuc = KhuVuc.SelectedItem?.ToString() ?? "Chưa có";
 
-            // ⚙️ Gọi hàm kiểm tra hợp lệ trong AuthHelper
+            // Gọi hàm kiểm tra hợp lệ trong AuthHelper
             string error = AuthHelper.ValidateInput(hoTen, username, password, confirm, email, sdt, ngaySinh);
             if (!string.IsNullOrEmpty(error))
             {
@@ -84,9 +81,9 @@ namespace Socket_Cinema
             }
         }
 
-        // ================================= //
+
         // 🔹 Link "Đăng nhập"
-        // ================================= //
+
         private void NutDangNhap_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             PhanDangNhap form = new PhanDangNhap();

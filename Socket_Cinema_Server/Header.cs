@@ -29,29 +29,29 @@ namespace Socket_Cinema_Server
 
         public static string GenerateJwtToken(string username)
         {
-            // 💡 1. Tạo Security Key từ Secret
+            // Tạo Security Key từ Secret
             string JwtSecret = "day-la-khoa-bi-mat-cua-server-hay-thay-the-no-bang-mot-chuoi-dai-hon-va-bao-mat-hon-123456";
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            // 💡 2. Định nghĩa Claims (Thông tin User)
+            //  Định nghĩa Claims (Thông tin User)
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // JWT ID
-                // Thêm các Claim khác nếu cần (ví dụ: vai trò)
+
             };
 
-            // 💡 3. Tạo Token
+            //  Tạo Token
             var token = new JwtSecurityToken(
-                // 💡 Các thông tin Issuer, Audience chỉ là ví dụ
+
                 issuer: "SocketCinemaServer",
                 audience: "SocketCinemaClient",
                 claims: claims,
-                expires: DateTime.Now.AddHours(1), // 💡 Token hết hạn sau 1 giờ
+                expires: DateTime.Now.AddHours(1), //  Token hết hạn sau 1 giờ
                 signingCredentials: credentials);
 
-            // 💡 4. Trả về Token dưới dạng chuỗi
+            // Trả về Token dưới dạng chuỗi
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
         static string DatabaseName = "USERSTCP";
@@ -60,7 +60,7 @@ namespace Socket_Cinema_Server
         {
             string dbName = DatabaseName;
 
-            // 1️⃣ Kết nối tới master để tạo database nếu chưa có
+            // Tạo database nếu chưa có
             string masterConn = @"Data Source=127.0.0.1;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True";
             using (SqlConnection connMaster = new SqlConnection(masterConn))
             {
@@ -76,10 +76,10 @@ namespace Socket_Cinema_Server
                 }
             }
 
-            // 2️⃣ Cập nhật connection string tới database mới
+            // Cập nhật connection string tới database mới
             string connectionString = $@"Data Source=127.0.0.1;Initial Catalog={dbName};Integrated Security=True;TrustServerCertificate=True";
 
-            // 3️⃣ Tạo bảng UserClient nếu chưa có
+            // Tạo bảng UserClient nếu chưa có
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 await conn.OpenAsync();
